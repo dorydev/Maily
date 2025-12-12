@@ -4,3 +4,5 @@ package-lock.json
 
 *.py
 *.zip
+*.DS_Store
+*.pyc
