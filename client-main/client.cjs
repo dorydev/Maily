@@ -8,20 +8,21 @@ function createWindow() {
     width: 1280,
     height: 800,
     backgroundColor: '#000000',
+    icon : __dirname + '/icon8-mail-100.svg',
     webPreferences: {
       preload: path.join(__dirname, 'preload.js'),
     },
   });
 
   if (isDev) {
-    // En dev : on pointe sur Vite
     win.loadURL('http://localhost:5173');
     win.webContents.openDevTools();
   } else {
-    // En prod : on pointe sur les fichiers buildés par Vite
     win.loadFile(path.join(__dirname, '..', 'dist', 'index.html'));
   }
 }
+
+app.setName('Maily - An Open Source Mail Client');
 
 app.whenReady().then(() => {
   createWindow();
