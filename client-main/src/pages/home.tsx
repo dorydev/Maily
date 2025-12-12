@@ -11,14 +11,6 @@ import {
 import { Label } from "../components/ui/label";
 import { Textarea } from "../components/ui/textarea";
 import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "../components/ui/select";
-import { Slider } from "../components/ui/slider";
-import {
   ToggleGroup,
   ToggleGroupItem,
 } from "../components/ui/toggle-group";
@@ -61,9 +53,6 @@ function MaskIcon({ src, className }: MaskIconProps) {
 
 
 function Home() {
-  const [temperature, setTemperature] = useState<number[]>([0.56]);
-  const [maxLength, setMaxLength] = useState<number[]>([256]);
-  const [topP, setTopP] = useState<number[]>([0.9]);
 
   const [composeMode, setComposeMode] = useState<"manual" | "upload">("manual");
   const [sidebarDraft, setSidebarDraft] = useState("");
@@ -145,13 +134,12 @@ function Home() {
                         <MaskIcon src={linkIcon} className="h-5 w-5" />
                       </Button>
                     </div>
-
-                    <Button type="button" size="sm" variant="outline">
-                      Insert
-                    </Button>
                   </div>
 
-              <Button size="sm">Submit</Button>
+              <div className="flex items-center gap-2">
+                <Button type="button" size="sm" variant="outline"> Preview </Button>
+                <Button size="sm">Submit</Button>
+              </div>
             </div>
           </CardContent>
         </Card>
@@ -159,103 +147,6 @@ function Home() {
         {/* Right: controls */}
         <Card className="flex w-[280px] flex-col">
           <CardContent className="flex flex-1 flex-col gap-6 pt-6">
-            {/* Mode */}
-            <section className="space-y-2">
-              <Label className="text-xs uppercase tracking-wide text-muted-foreground">
-                Mode
-              </Label>
-              <ToggleGroup
-                type="single"
-                defaultValue="complete"
-                className="grid grid-cols-3"
-              >
-                <ToggleGroupItem
-                  value="complete"
-                  className="py-1 text-xs"
-                  aria-label="Complete"
-                >
-                  ↦
-                </ToggleGroupItem>
-                <ToggleGroupItem
-                  value="insert"
-                  className="py-1 text-xs"
-                  aria-label="Insert"
-                >
-                  ⌄
-                </ToggleGroupItem>
-                <ToggleGroupItem
-                  value="edit"
-                  className="py-1 text-xs"
-                  aria-label="Edit"
-                >
-                  ✎
-                </ToggleGroupItem>
-              </ToggleGroup>
-            </section>
-
-            {/* Model */}
-            <section className="space-y-2">
-              <Label className="text-xs uppercase tracking-wide text-muted-foreground">
-                Model
-              </Label>
-              <Select defaultValue="text-davinci-003">
-                <SelectTrigger className="h-9">
-                  <SelectValue placeholder="Select a model" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="gpt-4">mail-model-3</SelectItem>
-                  <SelectItem value="gpt-4o">mail-model-2</SelectItem>
-                  <SelectItem value="text-davinci-003">
-                    mail-model-1
-                  </SelectItem>
-                </SelectContent>
-              </Select>
-            </section>
-
-            {/* Temperature */}
-            <section className="space-y-1.5">
-              <div className="flex items-center justify-between text-xs text-muted-foreground">
-                <span>Temperature</span>
-                <span>{temperature[0].toFixed(2)}</span>
-              </div>
-              <Slider
-                min={0}
-                max={1}
-                step={0.01}
-                value={temperature}
-                onValueChange={setTemperature}
-              />
-            </section>
-
-            {/* Maximum length */}
-            <section className="space-y-1.5">
-              <div className="flex items-center justify-between text-xs text-muted-foreground">
-                <span>Maximum Length</span>
-                <span>{maxLength[0]}</span>
-              </div>
-              <Slider
-                min={1}
-                max={2048}
-                step={1}
-                value={maxLength}
-                onValueChange={setMaxLength}
-              />
-            </section>
-
-            {/* Top P */}
-            <section className="space-y-1.5">
-              <div className="flex items-center justify-between text-xs text-muted-foreground">
-                <span>Top P</span>
-                <span>{topP[0].toFixed(2)}</span>
-              </div>
-              <Slider
-                min={0}
-                max={1}
-                step={0.01}
-                value={topP}
-                onValueChange={setTopP}
-              />
-            </section>
 
             {/* Compose (manual vs upload) */}
             <section className="space-y-2">
@@ -354,7 +245,8 @@ function Home() {
                 </div>
               )}
             </section>
-            <Popover>
+            <div className="align-bottom mt-auto">
+              <Popover>
               <PopoverTrigger asChild>
                 <Button variant="outline" className="w-full">
                   Settings
@@ -461,6 +353,7 @@ function Home() {
                 </section>
               </PopoverContent>
             </Popover>
+            </div>
           </CardContent>
         </Card>
       </main>
