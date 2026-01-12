@@ -54,7 +54,7 @@ function Home() {
         setIsDark(false);
         return;
       }
-      // Pas de thème stocké : on peut se baser sur la préférence système
+      // If not theme = system theme
     const prefersDark = window.matchMedia &&
       window.matchMedia("(prefers-color-scheme: dark)").matches;
 
@@ -261,7 +261,7 @@ function Home() {
         <main className="flex w-full min-h-0 flex-1 flex-col overflow-hidden">
           <div className="flex shrink-0 min-w-0 items-center gap-3 border-b bg-background px-6 py-3">
             
-    <div className="flex size-10 shrink-0 items-center justify-center rounded-lg bg-gradient-to-br from-primary to-primary/80 text-primary-foreground shadow-sm">
+    <div className="flex size-10 shrink-0 items-center justify-center rounded-lg bg-linear-to-br from-primary to-primary/80 text-primary-foreground shadow-sm">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 24 24"
@@ -427,7 +427,9 @@ function Home() {
                           </Button>
                         </PopoverTrigger>
                         <PopoverContent className="w-[min(560px,85vw)] h-[70vh] overflow-auto" align="end">
-                          <MailPreview subject={subject} body={body} format={format} recipientEmail={recipients[0]?.email} />
+                          <div className="[&_p]:my-0 [&_h1]:my-0 [&_h2]:my-0 [&_ul]:my-0 [&_ol]:my-0">
+                                <MailPreview subject={subject} body={body} format={format} recipientEmail={recipients[0]?.email} />
+                          </div>
                         </PopoverContent>
                       </Popover>
                       <Button size="sm" onClick={handleSend} disabled={isSending || recipients.length === 0}>

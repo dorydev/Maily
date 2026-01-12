@@ -39,6 +39,7 @@ export function MailPreview({ subject, body, format, recipientEmail }: MailPrevi
               {line.slice(2, -2)}
             </p>
           )
+        if (line.startsWith("*"))
         return (
           <p key={i} className="mb-1">
             {line || <br />}
@@ -70,7 +71,7 @@ export function MailPreview({ subject, body, format, recipientEmail }: MailPrevi
             {/* Email header simulation */}
             <div className="space-y-3 mb-6">
               <div className="flex items-start gap-3">
-                <div className="size-10 shrink-0 rounded-full bg-gradient-to-br from-primary to-primary/60 flex items-center justify-center text-primary-foreground font-semibold">
+                <div className="size-10 shrink-0 rounded-full bg-linear-to-br from-primary to-primary/60 flex items-center justify-center text-primary-foreground font-semibold">
                   M
                 </div>
                 <div className="flex-1 min-w-0">
