@@ -2,8 +2,8 @@
 
 import { useCallback, useMemo, useRef, useState, type ChangeEvent } from "react"
 
-import { SidebarProvider } from "../components/ui/sidebar"
-import { AppSidebar } from "../components/app-sidebar"
+//import { SidebarProvider } from "../components/ui/sidebar"
+//import { AppSidebar } from "../components/app-sidebar"
 import { ComposeEmailCard } from "../components/compose-email"
 import { CampaignSettingsCard } from "../components/campaign-settings"
 
@@ -211,8 +211,7 @@ function Home() {
 
   return (
     <div className="flex h-screen flex-col overflow-hidden bg-background text-foreground">
-      <SidebarProvider>
-        <AppSidebar/>
+
         <main className="flex w-full min-h-0 flex-1 flex-col overflow-hidden">
           <div className="flex shrink-0 min-w-0 items-center gap-3 border-b bg-background px-6 py-3">
             
@@ -282,7 +281,6 @@ function Home() {
             />
           </div>
         </main>
-        </SidebarProvider>
     </div>
   )
 }

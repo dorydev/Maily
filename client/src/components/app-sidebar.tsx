@@ -143,7 +143,7 @@ export function AppSidebar() {
       <SidebarFooter className="p-2">
         <div className="flex items-center justify-center">
           <div
-            className="flex size-10 items-center justify-center rounded-full bg-gradient-to-br from-chart-1 to-chart-2 text-sm font-semibold text-white"
+            className="flex size-10 items-center justify-center rounded-full bg-linear-to-br from-chart-1 to-chart-2 text-sm font-semibold text-white"
             title="John Doe • john.doe@mail.com"
             aria-label="John Doe"
           >

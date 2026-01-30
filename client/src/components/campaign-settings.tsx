@@ -181,12 +181,6 @@ export function CampaignSettingsCard({
                               value={v.key}
                               onChange={(e) => updateVariable(i, "key", e.target.value)}
                             />
-                            <Input
-                              className="h-9"
-                              placeholder="Prenom"
-                              value={v.label}
-                              onChange={(e) => updateVariable(i, "label", e.target.value)}
-                            />
                             <Button
                               type="button"
                               variant="ghost"

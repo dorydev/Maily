@@ -8,41 +8,82 @@ type MailPreviewProps = {
   body: string
   format: "md" | "html" | "txt"
   recipientEmail?: string
+  recipientData?: Record<string, string>
 }
 
-export function MailPreview({ subject, body, format, recipientEmail }: MailPreviewProps) {
+export function MailPreview({ subject, body, format, recipientEmail, recipientData }: MailPreviewProps) {
+  const renderTemplate = (template: string, data?: Record<string, string>) => {
+    if (!template) return ""
+    const d = data ?? {}
+
+    // Only replace the supported variables.
+    return template.replace(/\$[A-Za-z_][A-Za-z0-9_]*/g, (token) => {
+      if (token === "$firstname") return d.firstname ?? ""
+      if (token === "$lastname") return d.lastname ?? ""
+      return token // keep unknown tokens as-is
+    })
+  }
+
+  const previewSubject = renderTemplate(subject, recipientData)
+  const previewBody = renderTemplate(body, recipientData)
+
   const renderBody = () => {
     if (format === "html") {
       return (
-        <div dangerouslySetInnerHTML={{ __html: body || "<p class='text-muted-foreground text-sm'>Empty body</p>" }} />
+        <div dangerouslySetInnerHTML={{ __html: previewBody || "<p class='text-muted-foreground text-sm'>Empty body</p>" }} />
       )
     }
 
     if (format === "md") {
-      // Simple markdown preview (you could use a library like react-markdown)
-      const formatted = body.split("\n").map((line, i) => {
-        if (line.startsWith("# "))
+      // Simple markdown preview (intentionally minimal).
+      // Ensures we always return an element per line so content never disappears.
+      const lines = previewBody.split("\n")
+
+      const formatted = lines.map((raw, i) => {
+        const line = raw ?? ""
+
+        if (line.startsWith("# ")) {
           return (
             <h1 key={i} className="text-2xl font-bold mb-2">
               {line.slice(2)}
             </h1>
           )
-        if (line.startsWith("## "))
+        }
+
+        if (line.startsWith("## ")) {
           return (
             <h2 key={i} className="text-xl font-semibold mb-2">
               {line.slice(3)}
             </h2>
           )
-        if (line.startsWith("**") && line.endsWith("**"))
+        }
+
+        if (line.startsWith("**") && line.endsWith("**") && line.length >= 4) {
           return (
             <p key={i} className="font-bold mb-1">
               {line.slice(2, -2)}
             </p>
           )
-        if (line.startsWith("*"))
+        }
+
+        // Bullet line: "* item" or "- item"
+        if (line.startsWith("* ") || line.startsWith("- ")) {
+          return (
+            <p key={i} className="mb-1">
+              • {line.slice(2)}
+            </p>
+          )
+        }
+
+        // Empty line
+        if (line.trim() === "") {
+          return <div key={i} className="h-2" />
+        }
+
+        // Default paragraph
         return (
           <p key={i} className="mb-1">
-            {line || <br />}
+            {line}
           </p>
         )
       })
@@ -51,7 +92,7 @@ export function MailPreview({ subject, body, format, recipientEmail }: MailPrevi
     }
 
     // Plain text
-    return <pre className="whitespace-pre-wrap font-sans text-sm">{body || "Empty body"}</pre>
+    return <pre className="whitespace-pre-wrap font-sans text-sm">{previewBody || "Empty body"}</pre>
   }
 
   return (
@@ -90,14 +131,14 @@ export function MailPreview({ subject, body, format, recipientEmail }: MailPrevi
               {/* Subject line */}
               <div>
                 <h2 className="text-xl font-semibold text-foreground">
-                  {subject || <span className="text-muted-foreground">No subject</span>}
+                  {previewSubject || <span className="text-muted-foreground">No subject</span>}
                 </h2>
               </div>
             </div>
 
             {/* Email body */}
             <div className="prose prose-sm max-w-none dark:prose-invert">
-              {body ? (
+              {previewBody ? (
                 renderBody()
               ) : (
                 <div className="flex items-center justify-center h-32 text-muted-foreground text-sm">

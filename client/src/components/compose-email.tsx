@@ -11,8 +11,6 @@ import { Popover, PopoverContent, PopoverTrigger } from "../components/ui/popove
 
 import { MailPreview } from "../components/mail-preview"
 
-
-
 import fontIcon from "../assets/icons8-font-90.svg"
 import fileIcon from "../assets/icons8-add-file-100.svg"
 import linkIcon from "../assets/icons8-add-link-100.svg"
