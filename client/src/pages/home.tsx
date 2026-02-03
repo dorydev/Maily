@@ -39,11 +39,6 @@ function Home() {
     () => (normalizedApiBase && apiSendRoute.trim() ? `${normalizedApiBase}${normalizedSendRoute}` : ""),
     [normalizedApiBase, normalizedSendRoute, apiSendRoute]
   )
-  // Backend route that parses an uploaded CSV/TXT into recipients JSON
-  const parseRecipientsUrl = useMemo(
-    () => (normalizedApiBase ? `${normalizedApiBase}/parse-recipients` : ""),
-    [normalizedApiBase]
-  )
 
   const addVariable = () => setVariables((v) => [...v, { key: "", label: "" }])
 
@@ -64,7 +59,7 @@ function Home() {
     setSendError(null)
   }, [recipientsText])
 
-  // Recipients file upload
+  // Recipients file upload (front-only: no API)
   const handleRecipientsFileUpload = useCallback(async (e: ChangeEvent<HTMLInputElement>) => {
     const f = e.target.files?.[0]
     if (!f) return
@@ -72,31 +67,18 @@ function Home() {
     // reset input so selecting same file again triggers onChange
     e.target.value = ""
 
-    // fallback si pas d’API configurée
-    if (!parseRecipientsUrl) {
-      const text = await f.text()
-      setRecipientsText(text)
-      return
-    }
-
     try {
       setSendError(null)
 
-      const form = new FormData()
-      form.append("file", f)
+      const text = await f.text()
+      // keep the raw text visible in the textarea for transparency/debug
+      setRecipientsText(text)
 
-      const res = await fetch(parseRecipientsUrl, {
-        method: "POST",
-        body: form,
-      })
-
-      if (!res.ok) {
-        const msg = await res.text().catch(() => "")
-        throw new Error(msg || `Parse failed (HTTP ${res.status})`)
-      }
-
-      const json = await res.json()
-      const parsed: Recipient[] = Array.isArray(json) ? json : (json?.recipients ?? json?.data ?? [])
+      // Simple heuristics: CSV files are parsed by lines, TXT lists too.
+      // `parseRecipientsFromText` should accept:
+      // - one email per line
+      // - optionally: "email,prenom,nom" style lines (CSV)
+      const parsed = parseRecipientsFromText(text)
 
       setRecipients(parsed)
       setSentCount(0)
@@ -104,7 +86,7 @@ function Home() {
     } catch (err) {
       setSendError(err instanceof Error ? err.message : String(err))
     }
-  }, [parseRecipientsUrl])
+  }, [])
 
   const bodyRef = useRef<HTMLTextAreaElement | null>(null)
   const sendAbortRef = useRef<AbortController | null>(null)
