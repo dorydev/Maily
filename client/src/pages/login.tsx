@@ -4,11 +4,13 @@ import { useNavigate } from "react-router-dom";
 import { Button } from "../components/ui/button";
 import { Field, FieldLabel } from "../components/ui/field";
 import { Input } from "../components/ui/input";
+//import { ButtonGroup } from "../components/ui/button-group";
 
 import microsoftIcon from "../assets/icons8-microsoft-96.png";
 import googleIcon from "../assets/icons8-google-96.png";
 
 type Provider = "other";
+type Protocol = "imap" | "smtp";
 
 function Login() {
   const navigate = useNavigate();
@@ -22,6 +24,10 @@ function Login() {
     setExpandedProvider(null);
   };
 
+  const selectProtocol = (pc : Protocol) => {
+    return pc
+  };
+
   const handleLogin = () => {
     navigate("/home");
   };
@@ -29,18 +35,19 @@ function Login() {
   const renderCredentials = (p: Provider) => {
     if (expandedProvider !== p) return null;
     return (
-      <div className="rounded-lg border border-border bg-background p-4">
-        <div className="mb-3 text-sm font-medium text-center">Configure prodiver</div>
-
+      <div className="rounded-lg border border-border bg-background p-4 items-center">
+       <div>
+        <p>
+          Name :
+        </p>
+        <Field>
+          <Input id="account_name" type="text" placeholder="Your name"/>
+        </Field>
+       </div>
         <div className="space-y-4">
           <Field>
-            <FieldLabel htmlFor={`Protocol`}>Email</FieldLabel>
-            <Input id={`email-${p}`} type="email" placeholder="you@example.com" />
-          </Field>
-
-          <Field>
-            <FieldLabel htmlFor={`password`}>Password</FieldLabel>
-            <Input id={`password-${p}`} type="password" placeholder="••••••••" />
+            <FieldLabel htmlFor={`Protocol`}>Server URL</FieldLabel>
+            <Input id={`email-${p}`} type="email" placeholder={`${selectProtocol("smtp")}@mail.com`} />
           </Field>
 
           <Button type="button" className="w-full" onClick={handleLogin}>
@@ -67,10 +74,7 @@ function Login() {
             </button>
 
             <div className="flex-1 text-center">
-              <h2 className="text-2xl font-semibold tracking-tight">Login</h2>
-              <p className="text-sm text-muted-foreground">
-                Other provider
-              </p>
+              <h2 className="text-2xl font-semibold tracking-tight">Configure Provider</h2>
             </div>
 
             {/* spacer to keep title perfectly centered */}
