@@ -145,7 +145,7 @@ function SmtpConfigPage() {
   }
 
   return (
-    <div className="relative min-h-screen overflow-hidden bg-[radial-gradient(circle_at_top_left,_oklch(0.98_0.01_250),_transparent_45%)] px-4 py-8">
+    <div className="smtp-config-page relative min-h-screen overflow-hidden px-4 py-8">
       <div className="relative z-10 mx-auto flex w-full max-w-6xl flex-col gap-6">
         <header className="flex items-center justify-between">
           <div className="space-y-1">

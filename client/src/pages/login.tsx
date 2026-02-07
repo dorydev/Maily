@@ -42,7 +42,7 @@ function Login() {
     if (expandedProvider !== provider) return null
 
     return (
-      <div className="rounded-lg border border-border bg-background p-4">
+      <div className="rounded-xl border border-border/70 bg-card/70 p-4 shadow-sm">
         <div className="space-y-4">
           <Field>
             <FieldLabel htmlFor="account_name">Account name</FieldLabel>
@@ -84,8 +84,8 @@ function Login() {
   }
 
   return (
-    <div className="relative flex min-h-screen items-center justify-center bg-background text-foreground px-4">
-      <div className="w-full max-w-md space-y-6 rounded-xl border border-border bg-card p-8 shadow-lg">
+    <div className="relative flex min-h-screen w-full items-start justify-center overflow-y-auto bg-background px-4 py-6 text-foreground sm:items-center sm:py-10">
+      <div className="my-auto w-full max-w-md space-y-6 rounded-xl border border-border bg-card p-6 shadow-lg sm:p-8">
         {expandedProvider ? (
           <div className="flex items-center gap-3">
             <button
@@ -150,7 +150,7 @@ function Login() {
                 <p className="text-sm text-muted-foreground text-center">Log in with your own provider.</p>
               </div>
 
-              <div className="bg-background p-2">
+              <div className="rounded-xl border border-border/70 bg-card/70 p-4 shadow-sm">
                 <div className="space-y-4">
                   <Field>
                     <FieldLabel htmlFor="email">Email</FieldLabel>
@@ -176,7 +176,7 @@ function Login() {
 
                   <Button
                     type="button"
-                    className="w-full mt-5"
+                    className="mt-2 w-full"
                     onClick={openCustomProvider}
                     disabled={!email.trim() || !password.trim()}
                   >
@@ -185,7 +185,7 @@ function Login() {
                 </div>
               </div>
 
-              <p className="px-6 text-center text-xs text-muted-foreground">
+              <p className="px-2 text-center text-xs text-muted-foreground">
                 By clicking continue, you agree to our{" "}
                 <a href="#" className="underline underline-offset-2">
                   Terms of Service
