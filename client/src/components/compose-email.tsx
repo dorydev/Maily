@@ -1,6 +1,7 @@
 
 
 import { Button } from "../components/ui/button"
+import { ButtonGroup } from "./ui/button-group"
 import { Input } from "../components/ui/input"
 import { Card, CardContent, CardHeader, CardTitle } from "../components/ui/card"
 import { Label } from "../components/ui/label"
@@ -61,7 +62,7 @@ export function ComposeEmailCard({
         <CardHeader className="border-b pb-4">
           <CardTitle className="text-base font-semibold">Compose Email</CardTitle>
         </CardHeader>
-        <CardContent className="flex min-h-0 flex-1 flex-col gap-4 overflow-hidden pt-6">
+        <CardContent className="flex min-h-0 flex-1 flex-col gap-4 overflow-hidden">
           <div className="space-y-1.5">
             <Label htmlFor="subject" className="text-xs font-medium uppercase tracking-wider text-muted-foreground">
               Subject
@@ -91,6 +92,42 @@ export function ComposeEmailCard({
 
           <div className="flex items-center justify-between border-t pt-4">
             <div className="flex items-center gap-1">
+              <div className="flex items-center gap-2">
+     <ButtonGroup>
+                <Popover open={showPreview} onOpenChange={setShowPreview}>
+                 
+                  <PopoverTrigger asChild>
+                    
+                      <Button type="button" size="sm" variant={showPreview ? "secondary" : "outline"}>
+                        {showPreview ? "Hide Preview" : "Show Preview"}
+                      </Button>
+                  </PopoverTrigger>
+                  
+                  <PopoverContent className="w-[min(560px,85vw)] h-[70vh] overflow-auto" align="end">
+                    <div className="[&_p]:my-0 [&_h1]:my-0 [&_h2]:my-0 [&_ul]:my-0 [&_ol]:my-0">
+                      <MailPreview
+                        subject={subject}
+                        body={body}
+                        format={format}
+                        recipientEmail={recipientsPreviewEmail}
+                      />
+                    </div>
+                  </PopoverContent>
+                </Popover>
+                <Button type="button" size="sm">
+                  v
+                </Button>
+                </ButtonGroup>
+
+                <Button size="sm" onClick={handleSend} disabled={isSending || recipientsCount === 0}>
+                  {isSending ? "Sending..." : "Send Campaign"}
+                </Button>
+                <Button size="sm" variant="outline" onClick={handleStopSending} disabled={!isSending}>
+                  Stop
+                </Button>
+              </div>
+
+
               <Popover>
                 <PopoverTrigger asChild>
                   <Button type="button" variant="ghost" size="sm" className="h-9 gap-2">
@@ -174,33 +211,6 @@ export function ComposeEmailCard({
                   )}
                 </PopoverContent>
               </Popover>
-            </div>
-
-            <div className="flex items-center gap-2">
-              <Popover open={showPreview} onOpenChange={setShowPreview}>
-                <PopoverTrigger asChild>
-                  <Button type="button" size="sm" variant={showPreview ? "secondary" : "outline"}>
-                    {showPreview ? "Hide Preview" : "Show Preview"}
-                  </Button>
-                </PopoverTrigger>
-                <PopoverContent className="w-[min(560px,85vw)] h-[70vh] overflow-auto" align="end">
-                  <div className="[&_p]:my-0 [&_h1]:my-0 [&_h2]:my-0 [&_ul]:my-0 [&_ol]:my-0">
-                    <MailPreview
-                      subject={subject}
-                      body={body}
-                      format={format}
-                      recipientEmail={recipientsPreviewEmail}
-                    />
-                  </div>
-                </PopoverContent>
-              </Popover>
-
-              <Button size="sm" onClick={handleSend} disabled={isSending || recipientsCount === 0}>
-                {isSending ? "Sending..." : "Send Campaign"}
-              </Button>
-              <Button size="sm" variant="outline" onClick={handleStopSending} disabled={!isSending}>
-                Stop
-              </Button>
             </div>
           </div>
 
