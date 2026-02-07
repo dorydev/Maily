@@ -1,11 +1,11 @@
 import { WorkspaceShell } from "../components/workspace-shell"
 
-function Home() {
+function Archives() {
   return (
     <WorkspaceShell>
-      <h1 className="sr-only">Homepage</h1>
+      <h1 className="sr-only">Archives</h1>
     </WorkspaceShell>
   )
 }
 
-export default Home
+export default Archives

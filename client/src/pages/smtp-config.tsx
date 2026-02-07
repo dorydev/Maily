@@ -60,6 +60,9 @@ function SmtpConfigPage() {
   const navigate = useNavigate()
   const location = useLocation()
   const locationState = (location.state as LocationState | null) ?? null
+  const openedFromLogin = Boolean(locationState?.email || locationState?.accountName)
+  const backTarget = openedFromLogin ? "/login" : "/home"
+  const backLabel = openedFromLogin ? "Back to login" : "Back to home"
 
   const [form, setForm] = useState<SmtpFormState>(() => {
     const defaults = defaultState(locationState)
@@ -153,9 +156,9 @@ function SmtpConfigPage() {
             <h1 className="text-2xl font-semibold tracking-tight">SMTP Configuration</h1>
           </div>
           <Button asChild variant="outline">
-            <Link to="/login" className="inline-flex items-center gap-2">
+            <Link to={backTarget} className="inline-flex items-center gap-2">
               <ArrowLeft className="h-4 w-4" />
-              Back to login
+              {backLabel}
             </Link>
           </Button>
         </header>
