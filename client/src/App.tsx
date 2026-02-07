@@ -2,6 +2,7 @@
 import { Routes, Route, Navigate } from "react-router-dom";
 import Login from "./pages/login";
 import Home from "./pages/home";
+import SmtpConfigPage from "./pages/smtp-config";
 
 function App() {
 
@@ -14,6 +15,7 @@ function App() {
 
         {/* Pages */}
         <Route path="/login" element={<Login />} />
+        <Route path="/smtp-config" element={<SmtpConfigPage />} />
         <Route path="/home" element={<Home />} />
       </Routes>
 

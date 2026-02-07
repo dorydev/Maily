@@ -1,65 +1,90 @@
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useState } from "react"
+import { useNavigate } from "react-router-dom"
 
-import { Button } from "../components/ui/button";
-import { Field, FieldLabel } from "../components/ui/field";
-import { Input } from "../components/ui/input";
-//import { ButtonGroup } from "../components/ui/button-group";
+import { Button } from "../components/ui/button"
+import { Field, FieldLabel } from "../components/ui/field"
+import { Input } from "../components/ui/input"
 
-import microsoftIcon from "../assets/icons8-microsoft-96.png";
-import googleIcon from "../assets/icons8-google-96.png";
+import microsoftIcon from "../assets/icons8-microsoft-96.png"
+import googleIcon from "../assets/icons8-google-96.png"
 
-type Provider = "other";
-type Protocol = "imap" | "smtp";
+type Provider = "other"
 
 function Login() {
-  const navigate = useNavigate();
-  const [expandedProvider, setExpandedProvider] = useState<Provider | null>(null);
+  const navigate = useNavigate()
+  const [expandedProvider, setExpandedProvider] = useState<Provider | null>(null)
+  const [email, setEmail] = useState("")
+  const [password, setPassword] = useState("")
+  const [accountName, setAccountName] = useState("")
 
-  const toggleProvider = () => {
-    setExpandedProvider("other");
-  };
+  const openCustomProvider = () => {
+    setExpandedProvider("other")
+    if (!accountName.trim() && email.trim()) {
+      const inferredName = email.split("@")[0]?.replace(/[._-]/g, " ").trim()
+      if (inferredName) setAccountName(inferredName)
+    }
+  }
 
   const goBack = () => {
-    setExpandedProvider(null);
-  };
+    setExpandedProvider(null)
+  }
 
-  const selectProtocol = (pc : Protocol) => {
-    return pc
-  };
+  const goToSmtpConfig = () => {
+    navigate("/smtp-config", {
+      state: {
+        email: email.trim(),
+        accountName: accountName.trim() || email.split("@")[0]?.trim() || "",
+      },
+    })
+  }
 
-  const handleLogin = () => {
-    navigate("/home");
-  };
+  const renderCredentials = (provider: Provider) => {
+    if (expandedProvider !== provider) return null
 
-  const renderCredentials = (p: Provider) => {
-    if (expandedProvider !== p) return null;
     return (
-      <div className="rounded-lg border border-border bg-background p-4 items-center">
-       <div>
-        <p>
-          Name :
-        </p>
-        <Field>
-          <Input id="account_name" type="text" placeholder="Your name"/>
-        </Field>
-       </div>
+      <div className="rounded-lg border border-border bg-background p-4">
         <div className="space-y-4">
           <Field>
-            <FieldLabel htmlFor={`Protocol`}>Server URL</FieldLabel>
-            <Input id={`email-${p}`} type="email" placeholder={`${selectProtocol("smtp")}@mail.com`} />
+            <FieldLabel htmlFor="account_name">Account name</FieldLabel>
+            <Input
+              id="account_name"
+              type="text"
+              placeholder="Work account"
+              value={accountName}
+              onChange={(e) => setAccountName(e.target.value)}
+            />
           </Field>
 
-          <Button type="button" className="w-full" onClick={handleLogin}>
-            Continue
+          <Field>
+            <FieldLabel htmlFor="smtp_email">Email</FieldLabel>
+            <Input
+              id="smtp_email"
+              type="email"
+              placeholder="you@example.com"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
+          </Field>
+
+          <div className="rounded-md border bg-muted/30 p-3 text-xs text-muted-foreground">
+            Next step: configure SMTP host, port, security mode, and authentication.
+          </div>
+
+          <Button
+            type="button"
+            className="w-full"
+            onClick={goToSmtpConfig}
+            disabled={!email.trim()}
+          >
+            Open SMTP configuration
           </Button>
         </div>
       </div>
-    );
-  };
+    )
+  }
 
   return (
-    <div className="relative flex min-h-screen items-center justify-center bg-background text-foreground">
+    <div className="relative flex min-h-screen items-center justify-center bg-background text-foreground px-4">
       <div className="w-full max-w-md space-y-6 rounded-xl border border-border bg-card p-8 shadow-lg">
         {expandedProvider ? (
           <div className="flex items-center gap-3">
@@ -70,14 +95,13 @@ function Login() {
               aria-label="Back"
               title="Back"
             >
-              <span className="text-lg leading-none">←</span>
+              <span className="text-lg leading-none">{"<"}</span>
             </button>
 
             <div className="flex-1 text-center">
-              <h2 className="text-2xl font-semibold tracking-tight">Configure Provider</h2>
+              <h2 className="text-2xl font-semibold tracking-tight">Configure provider</h2>
             </div>
 
-            {/* spacer to keep title perfectly centered */}
             <div className="h-9 w-9" />
           </div>
         ) : (
@@ -89,9 +113,7 @@ function Login() {
 
         <div className="space-y-4">
           {expandedProvider ? (
-            <>
-              {renderCredentials(expandedProvider)}
-            </>
+            <>{renderCredentials(expandedProvider)}</>
           ) : (
             <>
               <div className="flex items-center gap-4">
@@ -122,32 +144,46 @@ function Login() {
                 <span className="h-px flex-1 bg-border" />
                 <span className="text-xs uppercase tracking-wide text-muted-foreground">Or</span>
                 <span className="h-px flex-1 bg-border" />
-                <br />
               </div>
+
               <div className="flex justify-center">
-                <p className="text-sm text-muted-foreground text-center">
-                  Log with your own provider.
-                </p>
+                <p className="text-sm text-muted-foreground text-center">Log in with your own provider.</p>
               </div>
 
-              <div className="bg-background p-2 ">
-                  <div className="space-y-4">
-                    <Field>
-                      <FieldLabel htmlFor={`email`}>Email</FieldLabel>
-                      <Input id={`email`} type="email" placeholder="you@example.com" />
-                    </Field>
+              <div className="bg-background p-2">
+                <div className="space-y-4">
+                  <Field>
+                    <FieldLabel htmlFor="email">Email</FieldLabel>
+                    <Input
+                      id="email"
+                      type="email"
+                      placeholder="you@example.com"
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                    />
+                  </Field>
 
-                    <Field>
-                      <FieldLabel htmlFor={`password`}>Password</FieldLabel>
-                      <Input id={`password`} type="password" placeholder="••••••••" />
-                    </Field>
+                  <Field>
+                    <FieldLabel htmlFor="password">Password</FieldLabel>
+                    <Input
+                      id="password"
+                      type="password"
+                      placeholder="********"
+                      value={password}
+                      onChange={(e) => setPassword(e.target.value)}
+                    />
+                  </Field>
 
-                    <Button type="button" className="w-full mt-5" onClick={() => toggleProvider()}>
-                      Continue
-                    </Button>
-                  </div>
-             </div>
-             
+                  <Button
+                    type="button"
+                    className="w-full mt-5"
+                    onClick={openCustomProvider}
+                    disabled={!email.trim() || !password.trim()}
+                  >
+                    Continue
+                  </Button>
+                </div>
+              </div>
 
               <p className="px-6 text-center text-xs text-muted-foreground">
                 By clicking continue, you agree to our{" "}
@@ -165,7 +201,7 @@ function Login() {
         </div>
       </div>
     </div>
-  );
+  )
 }
 
-export default Login;
+export default Login
