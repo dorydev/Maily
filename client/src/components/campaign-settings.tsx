@@ -73,7 +73,7 @@ export function CampaignSettingsCard({
       <CardHeader className="border-b pb-4">
         <CardTitle className="text-base font-semibold">Campaign Settings</CardTitle>
       </CardHeader>
-      <CardContent className="flex min-h-0 flex-1 flex-col gap-6 overflow-auto pt-6">
+      <CardContent className="flex min-h-0 flex-1 flex-col gap-6 overflow-auto">
         <section className="space-y-3">
           <div className="flex items-center justify-between">
             <Label className="text-xs font-medium uppercase tracking-wider text-muted-foreground">Recipients</Label>
