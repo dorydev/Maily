@@ -145,22 +145,8 @@
 }
 
 .smtp-config-page {
-  background:
-    radial-gradient(circle at top left, oklch(0.98 0.01 250), transparent 45%),
-    linear-gradient(to bottom, oklch(1 0 0), oklch(1 0 0));
-}
-
-.theme-oled .smtp-config-page {
-  background:
-    radial-gradient(circle at top left, oklch(0.17 0.02 250), transparent 46%),
-    linear-gradient(to bottom, oklch(0 0 0), oklch(0 0 0));
-}
-
-.theme-midnight .smtp-config-page {
-  background:
-    radial-gradient(circle at top left, oklch(0.28 0.05 250), transparent 48%),
-    radial-gradient(circle at 85% 10%, oklch(0.31 0.07 235 / 45%), transparent 42%),
-    linear-gradient(to bottom, oklch(0.16 0.03 262), oklch(0.14 0.03 262));
+  background-color: var(--background);
+  background-image: none;
 }
 
 @layer base {
