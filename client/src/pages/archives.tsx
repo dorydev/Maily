@@ -9,10 +9,10 @@ type ArchivesItem = {
 }
 
 const archivesRecipes: ArchivesItem[] = [
-  { date: "01/01/26", subject: "Test", content: "Lorem ipsum dolor sit amet consectetur adipiscing elit. Quisque faucibus ex sapien vitae pellentesque sem placerat. In id cursus mi pretium tellus duis convallis. Tempus leo eu aenean sed diam urna tempor. Pulvinar vivamus fringilla lacus nec metus bibendum egestas. Iaculis massa nisl malesuada lacinia integer nunc posuere. Ut hendrerit semper vel class aptent taciti sociosqu. Ad litora torquent per conubia nostra inceptos himenaeos." },
-  { date: "02/01/26", subject: "Test", content: "Lorem ipsum dolor sit amet consectetur adipiscing elit. Quisque faucibus ex sapien vitae pellentesque sem placerat. In id cursus mi pretium tellus duis convallis. Tempus leo eu aenean sed diam urna tempor. Pulvinar vivamus fringilla lacus nec metus bibendum egestas. Iaculis massa nisl malesuada lacinia integer nunc posuere. Ut hendrerit semper vel class aptent taciti sociosqu. Ad litora torquent per conubia nostra inceptos himenaeos." },
-  { date: "03/01/26", subject: "Test", content: "Lorem ipsum dolor sit amet consectetur adipiscing elit. Quisque faucibus ex sapien vitae pellentesque sem placerat. In id cursus mi pretium tellus duis convallis. Tempus leo eu aenean sed diam urna tempor. Pulvinar vivamus fringilla lacus nec metus bibendum egestas. Iaculis massa nisl malesuada lacinia integer nunc posuere. Ut hendrerit semper vel class aptent taciti sociosqu. Ad litora torquent per conubia nostra inceptos himenaeos." },
-  { date: "04/01/26", subject: "Test", content: "Lorem ipsum dolor sit amet consectetur adipiscing elit. Quisque faucibus ex sapien vitae pellentesque sem placerat. In id cursus mi pretium tellus duis convallis. Tempus leo eu aenean sed diam urna tempor. Pulvinar vivamus fringilla lacus nec metus bibendum egestas. Iaculis massa nisl malesuada lacinia integer nunc posuere. Ut hendrerit semper vel class aptent taciti sociosqu. Ad litora torquent per conubia nostra inceptos himenaeos." },
+  { date: "01/01/26", subject: "Raclette Annuelle", content: "Lorem ipsum dolor sit amet consectetur adipiscing elit. Quisque faucibus ex sapien vitae pellentesque sem placerat. In id cursus mi pretium tellus duis convallis. Tempus leo eu aenean sed diam urna tempor. Pulvinar vivamus fringilla lacus nec metus bibendum egestas. Iaculis massa nisl malesuada lacinia integer nunc posuere. Ut hendrerit semper vel class aptent taciti sociosqu. Ad litora torquent per conubia nostra inceptos himenaeos." },
+  { date: "02/01/26", subject: "Sieste saisonnière", content: "Lorem ipsum dolor sit amet consectetur adipiscing elit. Quisque faucibus ex sapien vitae pellentesque sem placerat. In id cursus mi pretium tellus duis convallis. Tempus leo eu aenean sed diam urna tempor. Pulvinar vivamus fringilla lacus nec metus bibendum egestas. Iaculis massa nisl malesuada lacinia integer nunc posuere. Ut hendrerit semper vel class aptent taciti sociosqu. Ad litora torquent per conubia nostra inceptos himenaeos." },
+  { date: "03/01/26", subject: "Pause Cacafé", content: "Lorem ipsum dolor sit amet consectetur adipiscing elit. Quisque faucibus ex sapien vitae pellentesque sem placerat. In id cursus mi pretium tellus duis convallis. Tempus leo eu aenean sed diam urna tempor. Pulvinar vivamus fringilla lacus nec metus bibendum egestas. Iaculis massa nisl malesuada lacinia integer nunc posuere. Ut hendrerit semper vel class aptent taciti sociosqu. Ad litora torquent per conubia nostra inceptos himenaeos." },
+  { date: "04/01/26", subject: "Réunion de 24h/j", content: "Lorem ipsum dolor sit amet consectetur adipiscing elit. Quisque faucibus ex sapien vitae pellentesque sem placerat. In id cursus mi pretium tellus duis convallis. Tempus leo eu aenean sed diam urna tempor. Pulvinar vivamus fringilla lacus nec metus bibendum egestas. Iaculis massa nisl malesuada lacinia integer nunc posuere. Ut hendrerit semper vel class aptent taciti sociosqu. Ad litora torquent per conubia nostra inceptos himenaeos." },
 ]
 
 function Archives() {
@@ -37,17 +37,17 @@ function Archives() {
           </section>
 
           <section>
-            <div className="mx-auto grid w-full max-w-6xl grid-cols-1 gap-6 px-6 pb-8 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-            {archivesRecipes.map(({ date, subject, content }) => (
-              <div
-                key={`${date}-${subject}`}
-                className="group flex cursor-pointer flex-col gap-3 rounded-lg border bg-muted/20 p-4 transition-all hover:-translate-y-0.5 hover:border-foreground/20 hover:bg-muted/30 hover:shadow-md"
-              >
-                <p className="text-base font-semibold">Subject : {subject}</p>
-                <div className="flex items-center justify-between text-xs text-muted-foreground">
-                  <span>{date}</span>
+            <div className="mx-auto grid w-full max-w-6xl grid-cols-1 gap-6 px-6 pb-8 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 ">
+              {archivesRecipes.map(({ date, subject, content }) => (
+                <div
+                  key={`${date}-${subject}`}
+                  className="group flex cursor-pointer flex-col gap-3 rounded-lg border bg-accent/20 p-4 transition-all hover:-translate-y-0.5 hover:border-foreground/20 hover:bg-muted/50 hover:shadow-md"
+                >
+                <div className="flex items-center justify-between">
+                  <p className="text-base font-semibold">{subject}</p>
                   <span className="opacity-0 transition-opacity group-hover:opacity-100">•••</span>
                 </div>
+                  <span className="text-xs text-muted-foreground">{date}</span>
                   <p className="text-sm text-muted-foreground line-clamp-2 leading-relaxed">{content}</p>
                 </div>
               ))}
