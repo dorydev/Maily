@@ -1,4 +1,4 @@
-import { Archive, House, Settings } from "lucide-react"
+import { Archive, House, Settings, LogOut } from "lucide-react"
 import { Link, useLocation } from "react-router-dom"
 
 type NavItem = {
@@ -13,6 +13,7 @@ const primaryNav: NavItem[] = [
 ]
 
 const secondaryNav: NavItem[] = [
+  { to : "/login", label : "Log Out", Icon : LogOut},
   { to: "/smtp-config", label: "Settings", Icon: Settings },
 ]
 
