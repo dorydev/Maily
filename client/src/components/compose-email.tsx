@@ -52,7 +52,6 @@ export function ComposeEmailCard({
   isSending,
   recipientsCount,
   handleSend,
-  handleStopSending,
   sendError,
   bodyRef,
 }: ComposeEmailCardProps) {
@@ -83,7 +82,7 @@ export function ComposeEmailCard({
             <Textarea
               id="body"
               ref={bodyRef}
-              className="flex-1 min-h-0 resize-none font-mono text-sm"
+              className="flex-1 min-h-0 resize-none text-sm"
               placeholder="Write your email message here... Use variables like $prenom"
               value={body}
               onChange={(e) => setBody(e.target.value)}
@@ -122,18 +121,21 @@ export function ComposeEmailCard({
                 <Button size="sm" onClick={handleSend} disabled={isSending || recipientsCount === 0}>
                   {isSending ? "Sending..." : "Send Campaign"}
                 </Button>
-                <Button size="sm" variant="outline" onClick={handleStopSending} disabled={!isSending}>
-                  Stop
-                </Button>
               </div>
 
-
+              <Button type="button" variant="ghost" size="sm" className="h-9 gap-2">
+                <MaskIcon src={fontIcon} className="h-4 w-4" />
+              </Button>
               <Popover>
                 <PopoverTrigger asChild>
-                  <Button type="button" variant="ghost" size="sm" className="h-9 gap-2">
-                    <MaskIcon src={fontIcon} className="h-4 w-4" />
-                    <span className="text-xs">{format.toUpperCase()}</span>
-                  </Button>
+                  <Button
+                      type="button"
+                      size="sm"
+                      variant={format === "txt" ? "secondary" : "outline"}
+                      className="flex-1"
+                    >
+                    {format.toUpperCase()}
+                    </Button>
                 </PopoverTrigger>
                 <PopoverContent className="w-[220px] space-y-3">
                   <Label className="text-xs font-medium uppercase tracking-wider text-muted-foreground">
