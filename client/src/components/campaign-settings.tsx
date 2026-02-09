@@ -88,7 +88,7 @@ export function CampaignSettingsCard({
             value={recipientsText}
             onChange={(e) => setRecipientsText(e.target.value)}
             placeholder="Paste emails or CSV data..."
-            className="min-h-[100px] resize-none text-xs font-mono"
+            className="min-h-[100px] resize-none text-xs"
           />
 
           <div className="flex items-center gap-2">
