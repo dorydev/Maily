@@ -1,8 +1,8 @@
 import { useEffect, useRef, useState } from "react"
 import { ChevronRight, Moon, Palette, Sun, Sunrise } from "lucide-react"
 
-import { Button } from "@/components/ui/button"
-import { applyTheme, getInitialTheme, persistTheme, type Theme } from "@/lib/theme"
+import { Button } from "../components/ui/button"
+import { applyTheme, getInitialTheme, persistTheme, type Theme } from "../lib/theme"
 
 const OPTIONS: Array<{ value: Theme; label: string; Icon: typeof Sun }> = [
   { value: "light", label: "Blanc", Icon: Sun },
