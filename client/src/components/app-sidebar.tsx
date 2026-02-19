@@ -10,6 +10,7 @@ type NavItem = {
 const primaryNav: NavItem[] = [
   { to: "/home", label: "Homepage", Icon: House },
   { to: "/archives", label: "Archives", Icon: Archive },
+  {to : "/test", label: "Test", Icon: House},
 ]
 
 const secondaryNav: NavItem[] = [

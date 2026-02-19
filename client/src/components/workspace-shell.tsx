@@ -203,9 +203,7 @@ export function WorkspaceShell({ children }: WorkspaceShellProps) {
 
       <div className="flex min-h-0 flex-1">
         <AppSidebar/>
-        <main className="min-w-0 flex-1">{children}
-
-
+        <main className="min-w-0 flex-1 flex flex-col">{children}
           <div className="flex min-h-0 flex-1 min-w-0 gap-4 overflow-hidden p-6">
             <ComposeEmailCard
                         subject={subject}

@@ -3,14 +3,20 @@ import { Routes, Route, Navigate } from "react-router-dom";
 import Login from "./pages/login";
 import Home from "./pages/home";
 import Archives from "./pages/archives";
+import Test from "./pages/test";
 import SmtpConfigPage from "./pages/smtp-config";
 import { ThemeToggle } from "./components/theme-toggle";
+import ErrorBoundary from "./handler/error";
 
 function App() {
-
-
   return (
     <div className="relative min-h-screen">
+      <ErrorBoundary
+        onError={(error, errorInfo) => {
+          // Centralise ici le logging (console, Sentry, etc.)
+          console.error("Unhandled UI error:", error, errorInfo);
+        }}
+      >
       <ThemeToggle />
       <Routes>
         {/* Redirige la racine vers /login */}
@@ -21,8 +27,9 @@ function App() {
         <Route path="/smtp-config" element={<SmtpConfigPage />} />
         <Route path="/home" element={<Home />} />
         <Route path="/archives" element={<Archives />} />
+        <Route path="/test" element={<Test />} />
       </Routes>
-
+      </ErrorBoundary>
     </div>
   );
 }
