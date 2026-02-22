@@ -2,8 +2,7 @@
 import { Routes, Route, Navigate } from "react-router-dom";
 import Login from "./pages/login";
 import Home from "./pages/home";
-import Archives from "./pages/archives";
-import Test from "./pages/test";
+import MailEditor from "./pages/mail-editor";
 import SmtpConfigPage from "./pages/smtp-config";
 import { ThemeToggle } from "./components/theme-toggle";
 import ErrorBoundary from "./handler/error";
@@ -26,8 +25,7 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/smtp-config" element={<SmtpConfigPage />} />
         <Route path="/home" element={<Home />} />
-        <Route path="/archives" element={<Archives />} />
-        <Route path="/test" element={<Test />} />
+        <Route path="/mail-editor" element={<MailEditor />} />
       </Routes>
       </ErrorBoundary>
     </div>
