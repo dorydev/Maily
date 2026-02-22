@@ -1,5 +1,3 @@
-
-
 import { Button } from "../components/ui/button"
 import { ButtonGroup } from "./ui/button-group"
 import { Input } from "../components/ui/input"
@@ -92,7 +90,7 @@ export function ComposeEmailCard({
           <div className="flex items-center justify-between border-t pt-4">
             <div className="flex items-center gap-1">
               <div className="flex items-center gap-2">
-     <ButtonGroup>
+              <ButtonGroup>
                 <Popover open={showPreview} onOpenChange={setShowPreview}>
                  
                   <PopoverTrigger asChild>
@@ -113,9 +111,6 @@ export function ComposeEmailCard({
                     </div>
                   </PopoverContent>
                 </Popover>
-                <Button type="button" size="sm">
-                  v
-                </Button>
                 </ButtonGroup>
 
                 <Button size="sm" onClick={handleSend} disabled={isSending || recipientsCount === 0}>

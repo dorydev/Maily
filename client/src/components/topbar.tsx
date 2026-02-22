@@ -1,9 +1,20 @@
+import { useState } from "react"
 import { Popover, PopoverContent, PopoverTrigger } from "../components/ui/popover"
 import { Button } from "./ui/button"
+import { UserProfileSheet } from "./user-profile"
 
 export function Topbar() {
+  const [sheetOpen, setSheetOpen] = useState(false)
+  const [popoverOpen, setPopoverOpen] = useState(false)
+
+  const handleOpenSheet = () => {
+    setPopoverOpen(false)
+    setSheetOpen(true)
+  }
+
   return (
-    <header className="flex items-center justify-between gap-4 border-b px-6 py-3">
+    <>
+      <header className="flex items-center justify-between gap-4 border-b px-6 py-3">
         <div className="flex min-w-0 items-center gap-3">
           <div className="flex size-10 shrink-0 items-center justify-center rounded-xl bg-linear-to-br from-primary to-primary/80 text-primary-foreground shadow-sm">
             <svg
@@ -25,19 +36,20 @@ export function Topbar() {
           </div>
         </div>
 
-          <Popover>
+        <Popover open={popoverOpen} onOpenChange={setPopoverOpen}>
           <PopoverTrigger asChild>
             <Button
-            className="flex size-12 shrink-0 items-center justify-center rounded-full bg-primary/15 text-sm font-semibold text-primary"
-            title="user-profile"
-            aria-label="user-profile"
+              className="flex size-10 shrink-0 items-center justify-center rounded-full bg-primary/15 text-sm font-semibold text-primary"
+              title="user-profile"
+              aria-label="user-profile"
             >
               JD
             </Button>
           </PopoverTrigger>
           <PopoverContent align="end" className="w-64 p-2">
+            {/* Mini résumé user */}
             <div className="flex items-center gap-3 p-2">
-              <div className="flex size-10 items-center justify-center rounded-full bg-primary/15 text-sm font-semibold text-primary">
+              <div className="flex size-10 items-center justify-center rounded-full bg-primary/15 text-sm font-semibold text-primary shrink-0">
                 JD
               </div>
               <div className="min-w-0">
@@ -52,14 +64,9 @@ export function Topbar() {
               <Button
                 variant="ghost"
                 className="h-9 w-full justify-start px-2"
+                onClick={handleOpenSheet}
               >
-                Manage accounts
-              </Button>
-              <Button
-                variant="ghost"
-                className="h-9 w-full justify-start px-2"
-              >
-                User Profile Settings
+                User profile & Account
               </Button>
             </div>
 
@@ -69,11 +76,14 @@ export function Topbar() {
               variant="ghost"
               className="h-9 w-full justify-start px-2 text-muted-foreground"
             >
-              Add account
+              Log out
             </Button>
           </PopoverContent>
         </Popover>
-
       </header>
+
+      {/* Sheet profile */}
+      <UserProfileSheet open={sheetOpen} onClose={() => setSheetOpen(false)} />
+    </>
   )
 }
