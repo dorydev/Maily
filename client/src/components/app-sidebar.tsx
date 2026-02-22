@@ -1,4 +1,4 @@
-import { Archive, House, Settings, LogOut } from "lucide-react"
+import { Mail, House, Settings, LogOut } from "lucide-react"
 import { Link, useLocation } from "react-router-dom"
 
 type NavItem = {
@@ -9,8 +9,7 @@ type NavItem = {
 
 const primaryNav: NavItem[] = [
   { to: "/home", label: "Homepage", Icon: House },
-  { to: "/archives", label: "Archives", Icon: Archive },
-  {to : "/test", label: "Test", Icon: House},
+  { to: "/mail-editor", label: "Mail editor", Icon: Mail },
 ]
 
 const secondaryNav: NavItem[] = [
@@ -19,7 +18,7 @@ const secondaryNav: NavItem[] = [
 ]
 
 export function AppSidebar(){
-  
+
   const { pathname } = useLocation()
   const isActive = (to: string) => pathname === to
 
