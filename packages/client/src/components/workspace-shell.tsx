@@ -1,11 +1,11 @@
 import type { ReactNode } from "react"
-import { useCallback, useMemo, useRef, useState, type ChangeEvent } from "react"
+import { useCallback, useRef, useState, type ChangeEvent } from "react"
 
 //import { SidebarProvider } from "../components/ui/sidebar"
 import { AppSidebar } from "./app-sidebar"
 import { Topbar } from "./topbar"
-import { ComposeEmailCard } from "../components/compose-email"
-import { CampaignSettingsCard } from "../components/campaign-settings"
+import { ComposeEmailCard } from "./compose-email"
+import { CampaignSettingsCard } from "./campaign-settings"
 
 import type { Recipient } from "../lib/types"
 import { parseRecipientsFromText } from "../lib/recipients"
@@ -24,10 +24,7 @@ export function WorkspaceShell({ children }: WorkspaceShellProps) {
     const [recipients, setRecipients] = useState<Recipient[]>([])
   
     const [rateLimit, setRateLimit] = useState<number>(1.0)
-    const [apiBaseUrl, setApiBaseUrl] = useState("")
-    const [apiSendRoute, setApiSendRoute] = useState("")
-    const [variables, setVariables] = useState<{ key: string; label: string }[]>([{ key: "$prenom", label: "Prenom" }])
-    const [signatures, setSignatures] = useState<File[]>([])
+   
   
     // Sending progress
     const [isSending, setIsSending] = useState(false)
@@ -35,28 +32,7 @@ export function WorkspaceShell({ children }: WorkspaceShellProps) {
     const [sendError, setSendError] = useState<string | null>(null)
   
     const [showPreview, setShowPreview] = useState(false)
-  
-    const normalizedApiBase = useMemo(() => apiBaseUrl.trim().replace(/\/+$/, ""), [apiBaseUrl])
-    const normalizedSendRoute = useMemo(
-      () => (apiSendRoute.trim().startsWith("/") ? apiSendRoute.trim() : `/${apiSendRoute.trim()}`),
-      [apiSendRoute]
-    )
-    const sendUrl = useMemo(
-      () => (normalizedApiBase && apiSendRoute.trim() ? `${normalizedApiBase}${normalizedSendRoute}` : ""),
-      [normalizedApiBase, normalizedSendRoute, apiSendRoute]
-    )
-  
-    const addVariable = () => setVariables((v) => [...v, { key: "", label: "" }])
-  
-    const updateVariable = (i: number, field: "key" | "label", value: string) =>
-      setVariables((v) => v.map((item, idx) => (idx === i ? { ...item, [field]: value } : item)))
-  
-    const removeVariable = (i: number) => setVariables((v) => v.filter((_, idx) => idx !== i))
-  
-    const handleSignatureUpload = (e: ChangeEvent<HTMLInputElement>) => {
-      const files = Array.from(e.target.files ?? [])
-      if (files.length) setSignatures((prev) => [...prev, ...files])
-    }
+
   
     const applyRecipientsFromText = useCallback(() => {
       const parsed = parseRecipientsFromText(recipientsText)
@@ -122,11 +98,6 @@ export function WorkspaceShell({ children }: WorkspaceShellProps) {
       if (isSending) return
       setSendError(null)
   
-      if (!sendUrl) {
-        setSendError("API not configured (Base URL + Send route).")
-        return
-      }
-  
       if (recipients.length === 0) {
         setSendError("No recipients. Paste a list or upload a CSV/TXT, then click Apply.")
         return
@@ -148,19 +119,16 @@ export function WorkspaceShell({ children }: WorkspaceShellProps) {
           const subjectRendered = renderTemplate(subject, rec)
           const bodyRendered = renderTemplate(body, rec)
   
-          const res = await fetch(sendUrl, {
+          const res = await fetch("http://localhost:3000/send", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
               to: rec.email,
               subject: subjectRendered,
-              body: bodyRendered,
-              format,
-              variables,
-              rateLimitSeconds: rateLimit,
+              content: bodyRendered,
+              format: format,
             }),
-            signal: controller.signal,
-          })
+          });
   
           if (!res.ok) {
             const msg = await res.text().catch(() => "")
@@ -184,12 +152,10 @@ export function WorkspaceShell({ children }: WorkspaceShellProps) {
       }
     }, [
       isSending,
-      sendUrl,
       recipients,
       subject,
       body,
       format,
-      variables,
       rateLimit,
     ])
   
@@ -212,7 +178,6 @@ export function WorkspaceShell({ children }: WorkspaceShellProps) {
                         setBody={setBody}
                         format={format}
                         setFormat={setFormat}
-                        variables={variables}
                         insertAtCursor={insertAtCursor}
                         showPreview={showPreview}
                         setShowPreview={setShowPreview}
@@ -231,20 +196,9 @@ export function WorkspaceShell({ children }: WorkspaceShellProps) {
                         applyRecipientsFromText={applyRecipientsFromText}
                         handleRecipientsFileUpload={handleRecipientsFileUpload}
                         format={format}
-                        variablesCount={variables.length}
+                        
                         rateLimit={rateLimit}
                         sentCount={sentCount}
-                        signatures={signatures}
-                        handleSignatureUpload={handleSignatureUpload}
-                        addVariable={addVariable}
-                        updateVariable={updateVariable}
-                        removeVariable={removeVariable}
-                        variables={variables}
-                        apiBaseUrl={apiBaseUrl}
-                        setApiBaseUrl={setApiBaseUrl}
-                        apiSendRoute={apiSendRoute}
-                        setApiSendRoute={setApiSendRoute}
-                        sendUrl={sendUrl}
               setRateLimit={setRateLimit}
               />
             </div>

@@ -1,19 +1,19 @@
-import { Button } from "../components/ui/button"
+import { Button } from "./ui/button"
 import { ButtonGroup } from "./ui/button-group"
-import { Input } from "../components/ui/input"
-import { Card, CardContent, CardHeader, CardTitle } from "../components/ui/card"
-import { Label } from "../components/ui/label"
-import { Textarea } from "../components/ui/textarea"
+import { Input } from "./ui/input"
+import { Card, CardContent, CardHeader, CardTitle } from "./ui/card"
+import { Label } from "./ui/label"
+import { Textarea } from "./ui/textarea"
 //import { Switch } from "../components/ui/switch";
 
-import { Popover, PopoverContent, PopoverTrigger } from "../components/ui/popover"
+import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover"
 
-import { MailPreview } from "../components/mail-preview"
+import { MailPreview } from "./mail-preview"
 
 import fontIcon from "../assets/icons8-font-90.svg"
 import fileIcon from "../assets/icons8-add-file-100.svg"
 import linkIcon from "../assets/icons8-add-link-100.svg"
-import { MaskIcon } from "../components/mask-icon"
+import { MaskIcon } from "./mask-icon"
 
 type ComposeEmailCardProps = {
   subject: string
@@ -22,7 +22,6 @@ type ComposeEmailCardProps = {
   setBody: (v: string) => void
   format: "md" | "html" | "txt"
   setFormat: (v: "md" | "html" | "txt") => void
-  variables: { key: string; label: string }[]
   insertAtCursor: (token: string) => void
   showPreview: boolean
   setShowPreview: (v: boolean) => void
@@ -42,8 +41,6 @@ export function ComposeEmailCard({
   setBody,
   format,
   setFormat,
-  variables,
-  insertAtCursor,
   showPreview,
   setShowPreview,
   recipientsPreviewEmail,
@@ -182,30 +179,6 @@ export function ComposeEmailCard({
                   <Label className="text-xs font-medium uppercase tracking-wider text-muted-foreground">
                     Insert Variable
                   </Label>
-
-                  {variables.filter((v) => v.key.trim() && v.label.trim()).length === 0 ? (
-                    <div className="text-xs text-muted-foreground py-2">
-                      No variables configured. Add them in the settings panel.
-                    </div>
-                  ) : (
-                    <div className="flex flex-col gap-1">
-                      {variables
-                        .filter((v) => v.key.trim() && v.label.trim())
-                        .map((v) => (
-                          <Button
-                            key={v.key}
-                            type="button"
-                            size="sm"
-                            variant="ghost"
-                            className="justify-between h-9 font-normal"
-                            onClick={() => insertAtCursor(v.key)}
-                          >
-                            <span className="font-mono text-xs">{v.key}</span>
-                            <span className="text-xs text-muted-foreground">{v.label}</span>
-                          </Button>
-                        ))}
-                    </div>
-                  )}
                 </PopoverContent>
               </Popover>
             </div>

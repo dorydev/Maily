@@ -11,13 +11,13 @@ import { type ChangeEvent } from "react"
 } from "../components/ui/select"*/
 
 //import { ScrollArea } from "../components/ui/scroll-area"
-import { Separator } from "../components/ui/separator"
-import { Badge } from "../components/ui/badge"
-import { Button } from "../components/ui/button"
+import { Separator } from "./ui/separator"
+import { Badge } from "./ui/badge"
+import { Button } from "./ui/button"
 //import { Input } from "../components/ui/input"
-import { Card, CardContent, CardHeader, CardTitle } from "../components/ui/card"
-import { Label } from "../components/ui/label"
-import { Textarea } from "../components/ui/textarea"
+import { Card, CardContent, CardHeader, CardTitle } from "./ui/card"
+import { Label } from "./ui/label"
+import { Textarea } from "./ui/textarea"
 //import { Popover, PopoverContent, PopoverTrigger } from "../components/ui/popover"
 
 
@@ -28,20 +28,8 @@ type CampaignSettingsCardProps = {
   applyRecipientsFromText: () => void
   handleRecipientsFileUpload: (e: ChangeEvent<HTMLInputElement>) => void
   format: "md" | "html" | "txt"
-  variablesCount: number
   rateLimit: number
   sentCount: number
-  signatures: File[]
-  handleSignatureUpload: (e: ChangeEvent<HTMLInputElement>) => void
-  addVariable: () => void
-  updateVariable: (i: number, field: "key" | "label", value: string) => void
-  removeVariable: (i: number) => void
-  variables: { key: string; label: string }[]
-  apiBaseUrl: string
-  setApiBaseUrl: (v: string) => void
-  apiSendRoute: string
-  setApiSendRoute: (v: string) => void
-  sendUrl: string
   setRateLimit: (v: number) => void
 }
 
@@ -52,7 +40,6 @@ export function CampaignSettingsCard({
   applyRecipientsFromText,
   handleRecipientsFileUpload,
   format,
-  variablesCount,
   rateLimit,
   sentCount,
   /**signatures,
@@ -123,7 +110,7 @@ export function CampaignSettingsCard({
             </div>
             <div className="rounded-lg border bg-card p-3">
               <div className="text-xs text-muted-foreground mb-1">Variables</div>
-              <div className="font-semibold text-sm">{variablesCount}</div>
+              <div className="font-semibold text-sm">1</div>
             </div>
             <div className="rounded-lg border bg-card p-3">
               <div className="text-xs text-muted-foreground mb-1">Rate Limit</div>
