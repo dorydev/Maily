@@ -1,196 +1,121 @@
+"use client"
+
+import { useState } from "react"
+import { PageHeader } from "./page-header"
+import { Card, CardContent } from "./ui/card"
 import { Button } from "./ui/button"
-import { ButtonGroup } from "./ui/button-group"
 import { Input } from "./ui/input"
-import { Card, CardContent, CardHeader, CardTitle } from "./ui/card"
 import { Label } from "./ui/label"
 import { Textarea } from "./ui/textarea"
-//import { Switch } from "../components/ui/switch";
+import { Tabs, TabsList, TabsTrigger, TabsContent } from "./ui/tabs"
+import { Send, Paperclip, Eye, Code, Type, Bold, Italic, Link2, List, Image } from "lucide-react"
 
-import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover"
+export function ComposeEmailCard() {
+  const [subject, setSubject] = useState("")
+  const [body, setBody] = useState("")
 
-import { MailPreview } from "./mail-preview"
-
-import fontIcon from "../assets/icons8-font-90.svg"
-import fileIcon from "../assets/icons8-add-file-100.svg"
-import linkIcon from "../assets/icons8-add-link-100.svg"
-import { MaskIcon } from "./mask-icon"
-
-type ComposeEmailCardProps = {
-  subject: string
-  setSubject: (v: string) => void
-  body: string
-  setBody: (v: string) => void
-  format: "md" | "html" | "txt"
-  setFormat: (v: "md" | "html" | "txt") => void
-  insertAtCursor: (token: string) => void
-  showPreview: boolean
-  setShowPreview: (v: boolean) => void
-  recipientsPreviewEmail?: string
-  isSending: boolean
-  recipientsCount: number
-  handleSend: () => void
-  handleStopSending: () => void
-  sendError: string | null
-  bodyRef: React.RefObject<HTMLTextAreaElement | null>
-}
-
-export function ComposeEmailCard({
-  subject,
-  setSubject,
-  body,
-  setBody,
-  format,
-  setFormat,
-  showPreview,
-  setShowPreview,
-  recipientsPreviewEmail,
-  isSending,
-  recipientsCount,
-  handleSend,
-  sendError,
-  bodyRef,
-}: ComposeEmailCardProps) {
   return (
-    <div className="flex flex-1 min-w-0 flex-col">
-      <Card className="flex min-h-0 flex-1 flex-col">
-        <CardHeader className="border-b pb-4">
-          <CardTitle className="text-base font-semibold">Compose Email</CardTitle>
-        </CardHeader>
-        <CardContent className="flex min-h-0 flex-1 flex-col gap-4 overflow-hidden">
-          <div className="space-y-1.5">
-            <Label htmlFor="subject" className="text-xs font-medium uppercase tracking-wider text-muted-foreground">
-              Subject
-            </Label>
-            <Input
-              id="subject"
-              placeholder="Enter email subject..."
-              className="h-10"
-              value={subject}
-              onChange={(e) => setSubject(e.target.value)}
-            />
-          </div>
+    <>
 
-          <div className="flex min-h-0 flex-1 flex-col space-y-1.5">
-            <Label htmlFor="body" className="text-xs font-medium uppercase tracking-wider text-muted-foreground">
-              Message Body
-            </Label>
-            <Textarea
-              id="body"
-              ref={bodyRef}
-              className="flex-1 min-h-0 resize-none text-sm"
-              placeholder="Write your email message here... Use variables like $prenom"
-              value={body}
-              onChange={(e) => setBody(e.target.value)}
-            />
-          </div>
+      <div className="p-6 lg:p-8 flex flex-col gap-6 min-h-0 flex-1">
 
-          <div className="flex items-center justify-between border-t pt-4">
-            <div className="flex items-center gap-1">
-              <div className="flex items-center gap-2">
-              <ButtonGroup>
-                <Popover open={showPreview} onOpenChange={setShowPreview}>
-                 
-                  <PopoverTrigger asChild>
-                    
-                      <Button type="button" size="sm" variant={showPreview ? "secondary" : "outline"}>
-                        {showPreview ? "Hide Preview" : "Show Preview"}
-                      </Button>
-                  </PopoverTrigger>
-                  
-                  <PopoverContent className="w-[min(560px,85vw)] h-[70vh] overflow-auto" align="end">
-                    <div className="[&_p]:my-0 [&_h1]:my-0 [&_h2]:my-0 [&_ul]:my-0 [&_ol]:my-0">
-                      <MailPreview
-                        subject={subject}
-                        body={body}
-                        format={format}
-                        recipientEmail={recipientsPreviewEmail}
-                      />
-                    </div>
-                  </PopoverContent>
-                </Popover>
-                </ButtonGroup>
-
-                <Button size="sm" onClick={handleSend} disabled={isSending || recipientsCount === 0}>
-                  {isSending ? "Sending..." : "Send Campaign"}
-                </Button>
+        {/* Email Body */}
+        <Card className="border-border">
+          <div className="flex flex-col gap-2 sm:flex-row sm:items-center p-6">
+                <Label htmlFor="subject" className="sm:w-20 text-sm font-medium text-foreground shrink-0">
+                  Sujet :
+                </Label>
+                <div className="flex-1">
+                  <Input
+                    id="subject"
+                    placeholder="Sujet de votre email"
+                    value={subject}
+                    onChange={(e) => setSubject(e.target.value)}
+                    className="bg-card"
+                  />
+                </div>
               </div>
+          <Tabs defaultValue="visual" className="w-full">
+            <div className="flex items-center justify-between px-4 pt-4 pb-0">
+              <TabsList className="bg-muted">
+                <TabsTrigger value="visual" className="gap-1.5">
+                  <Type className="w-3.5 h-3.5" />
+                  Editeur
+                </TabsTrigger>
+                <TabsTrigger value="html" className="gap-1.5">
+                  <Code className="w-3.5 h-3.5" />
+                  HTML
+                </TabsTrigger>
+                <TabsTrigger value="preview" className="gap-1.5">
+                  <Eye className="w-3.5 h-3.5" />
+                  Apercu
+                </TabsTrigger>
+              </TabsList>
 
-              <Button type="button" variant="ghost" size="sm" className="h-9 gap-2">
-                <MaskIcon src={fontIcon} className="h-4 w-4" />
-              </Button>
-              <Popover>
-                <PopoverTrigger asChild>
-                  <Button
-                      type="button"
-                      size="sm"
-                      variant={format === "txt" ? "secondary" : "outline"}
-                      className="flex-1"
-                    >
-                    {format.toUpperCase()}
-                    </Button>
-                </PopoverTrigger>
-                <PopoverContent className="w-[220px] space-y-3">
-                  <Label className="text-xs font-medium uppercase tracking-wider text-muted-foreground">
-                    Email Format
-                  </Label>
-                  <div className="flex gap-2">
-                    <Button
-                      type="button"
-                      size="sm"
-                      variant={format === "md" ? "secondary" : "outline"}
-                      onClick={() => setFormat("md")}
-                      className="flex-1"
-                    >
-                      MD
-                    </Button>
-                    <Button
-                      type="button"
-                      size="sm"
-                      variant={format === "html" ? "secondary" : "outline"}
-                      onClick={() => setFormat("html")}
-                      className="flex-1"
-                    >
-                      HTML
-                    </Button>
-                    <Button
-                      type="button"
-                      size="sm"
-                      variant={format === "txt" ? "secondary" : "outline"}
-                      onClick={() => setFormat("txt")}
-                      className="flex-1"
-                    >
-                      TXT
-                    </Button>
-                  </div>
-                </PopoverContent>
-              </Popover>
-
-              <Button type="button" variant="ghost" size="sm" className="h-9" disabled>
-                <MaskIcon src={fileIcon} className="h-4 w-4" />
-              </Button>
-
-              <Popover>
-                <PopoverTrigger asChild>
-                  <Button type="button" variant="ghost" size="sm" className="h-9">
-                    <MaskIcon src={linkIcon} className="h-4 w-4" />
-                  </Button>
-                </PopoverTrigger>
-                <PopoverContent className="w-[260px] space-y-3">
-                  <Label className="text-xs font-medium uppercase tracking-wider text-muted-foreground">
-                    Insert Variable
-                  </Label>
-                </PopoverContent>
-              </Popover>
+              <div className="flex items-center gap-1">
+                <button className="p-1.5 rounded hover:bg-muted text-muted-foreground hover:text-foreground transition-colors" aria-label="Bold">
+                  <Bold className="w-4 h-4" />
+                </button>
+                <button className="p-1.5 rounded hover:bg-muted text-muted-foreground hover:text-foreground transition-colors" aria-label="Italic">
+                  <Italic className="w-4 h-4" />
+                </button>
+                <button className="p-1.5 rounded hover:bg-muted text-muted-foreground hover:text-foreground transition-colors" aria-label="Link">
+                  <Link2 className="w-4 h-4" />
+                </button>
+                <button className="p-1.5 rounded hover:bg-muted text-muted-foreground hover:text-foreground transition-colors" aria-label="List">
+                  <List className="w-4 h-4" />
+                </button>
+                <button className="p-1.5 rounded hover:bg-muted text-muted-foreground hover:text-foreground transition-colors" aria-label="Image">
+                  <Image className="w-4 h-4" />
+                </button>
+              </div>
             </div>
+
+            <CardContent className="p-4">
+              <TabsContent value="visual" className="mt-0">
+                <Textarea
+                  placeholder="Redigez le contenu de votre email ici..."
+                  value={body}
+                  onChange={(e) => setBody(e.target.value)}
+                  className="min-h-80 bg-card resize-none text-sm leading-relaxed"
+                />
+              </TabsContent>
+              <TabsContent value="html" className="mt-0">
+                <Textarea
+                  placeholder="<html>&#10;  <body>&#10;    <h1>Votre contenu HTML</h1>&#10;  </body>&#10;</html>"
+                  className="min-h-80 bg-card resize-none font-mono text-sm leading-relaxed"
+                />
+              </TabsContent>
+              <TabsContent value="preview" className="mt-0">
+                <div className="min-h-80 rounded-md border border-border bg-card p-6">
+                  {body ? (
+                    <div className="text-sm leading-relaxed text-foreground whitespace-pre-wrap">{body}</div>
+                  ) : (
+                    <p className="text-sm text-muted-foreground italic">
+                      {"L'apercu de votre email apparaitra ici..."}
+                    </p>
+                  )}
+                </div>
+              </TabsContent>
+            </CardContent>
+          </Tabs>
+        </Card>
+
+        {/* Attachments & Actions */}
+        <div className="flex items-center justify-between">
+          <Button variant="outline" className="gap-2 text-muted-foreground">
+            <Paperclip className="w-4 h-4" />
+            Joindre un fichier
+          </Button>
+          <div className="flex items-center gap-3">
+            <Button variant="outline">Sauvegarder brouillon</Button>
+            <Button className="bg-primary text-primary-foreground hover:bg-primary/90 gap-2">
+              <Send className="w-4 h-4" />
+              Envoyer
+            </Button>
           </div>
-
-          {sendError && (
-            <div className="rounded-lg border border-destructive/40 bg-destructive/10 p-3 text-xs text-destructive">
-              <strong>Error:</strong> {sendError}
-            </div>
-          )}
-        </CardContent>
-      </Card>
-    </div>
+        </div>
+      </div>
+    </>
   )
 }

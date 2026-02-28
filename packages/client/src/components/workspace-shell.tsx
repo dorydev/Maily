@@ -170,35 +170,17 @@ export function WorkspaceShell({ children }: WorkspaceShellProps) {
       <div className="flex min-h-0 flex-1">
         <AppSidebar/>
         <main className="min-w-0 flex-1 flex flex-col">{children}
-          <div className="flex min-h-0 flex-1 min-w-0 gap-4 overflow-hidden p-6">
-            <ComposeEmailCard
-                        subject={subject}
-                        setSubject={setSubject}
-                        body={body}
-                        setBody={setBody}
-                        format={format}
-                        setFormat={setFormat}
-                        insertAtCursor={insertAtCursor}
-                        showPreview={showPreview}
-                        setShowPreview={setShowPreview}
-                        recipientsPreviewEmail={recipients[0]?.email}
-                        isSending={isSending}
-                        recipientsCount={recipients.length}
-                        handleSend={handleSend}
-                        handleStopSending={handleStopSending}
-                        sendError={sendError}
-                        bodyRef={bodyRef}
-                      />
-                      <CampaignSettingsCard
-                        recipientsText={recipientsText}
-                        setRecipientsText={setRecipientsText}
-                        recipientsCount={recipients.length}
-                        applyRecipientsFromText={applyRecipientsFromText}
-                        handleRecipientsFileUpload={handleRecipientsFileUpload}
-                        format={format}
-                        
-                        rateLimit={rateLimit}
-                        sentCount={sentCount}
+          <div className="flex min-h-0 flex-1 gap-4 overflow-hidden p-6">
+            <ComposeEmailCard/>
+            <CampaignSettingsCard
+              recipientsText={recipientsText}
+              setRecipientsText={setRecipientsText}
+              recipientsCount={recipients.length}
+              applyRecipientsFromText={applyRecipientsFromText}
+              handleRecipientsFileUpload={handleRecipientsFileUpload}
+              format={format}       
+              rateLimit={rateLimit}
+              sentCount={sentCount}
               setRateLimit={setRateLimit}
               />
             </div>
