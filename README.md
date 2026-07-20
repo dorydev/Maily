@@ -1,14 +1,18 @@
 # Maily 
 
+<br>
 
+<p align="center">
+  <img src="https://img.shields.io/badge/Language-Typescript-blue" />
+  <img src="https://img.shields.io/badge/Standard-NodeJS-informational" />
+  <img src="https://img.shields.io/badge/Database-SQLite-lightgrey" />
+  <img src="https://img.shields.io/badge/Platform-macOS%20%7C%20Linux-lightblue" />
+  <img src="https://img.shields.io/badge/Build-Electron-success" />
+</p>
 
 - [Maily](#maily)
     - [Overview -](#overview--)
     - [Project Architecture -](#project-architecture--)
-    - [Installation -](#installation--)
-      - [**Build from repository**:](#build-from-repository)
-      - [**Install with installer**:](#install-with-installer)
-    - [User guide -](#user-guide--)
     - [Docker deploy -](#docker-deploy--)
     - [Licence -](#licence--)
 
@@ -22,37 +26,12 @@ Maily is a free, open-source software which  allows you to manage mass mailings 
 
 A view of the project's architecture:
 ```
-MAILY/client
-├─ src/
-│  ├─ pages/                 # main pages (home, archives, login, smtp)
-│  ├─ components/            # Pages items (topbar, sidebar, toogle-theme, ...)
-│  └─ assets/                # Icons 
-├─ client.cjs                # Electron client 
-└─ Other config files        # tsconfig, components, ...
+MAILY/
+├─ app/
+│  ├─ ...                 
+├─ backend/                  # SMTP, Google & Microsoft Auth
+└─ database/                 # SQLite configuration 
 ```
 
-### Installation -
 
-#### **Build from repository**:
-
-``` shell
-git clone  https://github.com/dorydev/Maily.git
-cd Maily/client
-npm run build
-```
-
-#### **Install with installer**:
-
-**(1) MacOs**: 
-
-Download the `.xxx` installer
-
-**(2) Linux**: 
-
-Download the `.xxx` installer
-
-### User guide -
-
-### Docker deploy -
-
-### Licence -
+### Licence
