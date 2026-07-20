@@ -1,6 +1,17 @@
+<<<<<<< HEAD
 node_modules
 *.zip
 *.DS_Store
 *.pyc
 *.csv
 .env
+=======
+.idea
+*.sqlite
+*.dev.json
+package-lock.json
+.env
+/app
+/tests
+/node_modules
+>>>>>>> e8f55d6 (First commit)

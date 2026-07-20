@@ -1,0 +1,8 @@
+.idea
+*.sqlite
+*.dev.json
+package-lock.json
+.env
+/app
+/tests
+/node_modules
